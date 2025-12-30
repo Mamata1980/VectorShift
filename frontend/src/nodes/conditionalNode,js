@@ -1,0 +1,77 @@
+// conditionalNode.js - New Node demonstrating abstraction (Part 1)
+
+import { useState } from 'react';
+import { BaseNode, NodeInput, NodeSelect } from './BaseNode';
+
+export const ConditionalNode = ({ id, data }) => {
+  const [operator, setOperator] = useState(data?.operator || 'if');
+  const [condition, setCondition] = useState(data?.condition || '');
+
+  return (
+    <BaseNode
+      id={id}
+      data={data}
+      title="Conditional"
+      icon="🔀"
+      color="#a855f7"
+      inputs={[{ id: 'input', label: 'Input' }]}
+      outputs={[
+        { id: 'true', label: 'True', position: 35 },
+        { id: 'false', label: 'False', position: 65 }
+      ]}
+    >
+      <NodeSelect
+        label="Logic Type"
+        value={operator}
+        onChange={(e) => setOperator(e.target.value)}
+        options={[
+          { value: 'if', label: 'If' },
+          { value: 'if-else', label: 'If-Else' },
+          { value: 'switch', label: 'Switch' },
+          { value: 'ternary', label: 'Ternary' }
+        ]}
+      />
+      <NodeInput
+        label="Condition"
+        value={condition}
+        onChange={(e) => setCondition(e.target.value)}
+        placeholder="value > 10 && value < 100"
+      />
+      <div style={{ 
+        marginTop: '8px', 
+        padding: '10px', 
+        background: '#0f0f1a', 
+        borderRadius: '8px',
+        border: '1px solid #374151'
+      }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '8px',
+          marginBottom: '6px'
+        }}>
+          <span style={{ 
+            padding: '2px 8px', 
+            background: '#22c55e', 
+            color: '#fff',
+            borderRadius: '4px',
+            fontSize: '10px',
+            fontWeight: 600
+          }}>TRUE</span>
+          <span style={{ fontSize: '11px', color: '#9ca3af' }}>→ Passes condition</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ 
+            padding: '2px 8px', 
+            background: '#ef4444', 
+            color: '#fff',
+            borderRadius: '4px',
+            fontSize: '10px',
+            fontWeight: 600
+          }}>FALSE</span>
+          <span style={{ fontSize: '11px', color: '#9ca3af' }}>→ Fails condition</span>
+        </div>
+      </div>
+    </BaseNode>
+  );
+};
